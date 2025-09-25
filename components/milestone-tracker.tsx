@@ -64,7 +64,7 @@ export function MilestoneTracker() {
                     <CardHeader className="pb-3">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-lg">{skill.name}</CardTitle>
-                        <Badge variant={skill.remaining <= 5 ? "default" : "secondary"}>-{skill.remaining} lvls</Badge>
+                        <Badge variant={(skill.remaining || 0) <= 5 ? "default" : "secondary"}>-{skill.remaining || 0} lvls</Badge>
                       </div>
                     </CardHeader>
                     <CardContent>
@@ -86,7 +86,7 @@ export function MilestoneTracker() {
             <div className="text-sm text-muted-foreground mb-1">Next Goal</div>
             <div className="text-2xl font-bold text-primary">Achievement Cape</div>
             <div className="text-sm text-muted-foreground mt-1">
-              {mounted ? relevantSkills.reduce((sum, skill) => sum + skill.remaining, 0) : "..."} levels remaining
+              {mounted ? relevantSkills.reduce((sum, skill) => sum + (skill.remaining || 0), 0) : "..."} levels remaining
             </div>
           </Card>
         </div>
