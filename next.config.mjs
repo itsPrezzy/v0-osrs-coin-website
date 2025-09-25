@@ -9,6 +9,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Add this to fix the prerendering issue
+  experimental: {
+    esmExternals: 'loose',
+  }
 }
 
 export default nextConfig
