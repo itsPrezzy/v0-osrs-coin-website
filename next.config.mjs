@@ -9,8 +9,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Disable static generation for pages with client-side data fetching
-  output: 'standalone',
+  // Disable static optimization for pages with hooks
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 }
 
 export default nextConfig
