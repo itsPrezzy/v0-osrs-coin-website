@@ -1,18 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
-  // Disable static optimization for pages with hooks
-  experimental: {
-    missingSuspenseWithCSRBailout: false,
-  },
+  reactStrictMode: false,
+  swcMinify: false,
 }
 
 export default nextConfig
