@@ -9,10 +9,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Add this to fix the prerendering issue
-  experimental: {
-    esmExternals: 'loose',
-  }
+  // Disable static generation for pages with client-side data fetching
+  output: 'standalone',
 }
 
 export default nextConfig
