@@ -1,11 +1,17 @@
 "use client"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { useOSRSData } from "@/hooks/use-osrs-data"
 
 export function MilestoneTracker() {
+  const [mounted, setMounted] = useState(false)
   const { skills, isLoading, totalLevel, username, error } = useOSRSData()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Filter to only show skills needed for Achievement Diary
   const relevantSkills = skills.filter((skill) =>
@@ -32,13 +38,13 @@ export function MilestoneTracker() {
           </Badge>
           <h2 className="text-3xl font-bold text-balance mb-4">Achievement Diary Cape</h2>
           <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-            Track real-time progress toward the Achievement Diary Cape. Current total level: {totalLevel}
-            {error && <span className="block text-sm text-yellow-500 mt-1">Using demo data - {username}</span>}
+            Track real-time progress toward the Achievement Diary Cape. Current total level: {mounted ? totalLevel : "..."}
+            {mounted && error && <span className="block text-sm text-yellow-500 mt-1">Using demo data - {username}</span>}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {isLoading
+          {!mounted || isLoading
             ? // Loading skeleton
               Array.from({ length: 10 }).map((_, i) => (
                 <Card key={i} className="osrs-border animate-pulse">
@@ -80,7 +86,7 @@ export function MilestoneTracker() {
             <div className="text-sm text-muted-foreground mb-1">Next Goal</div>
             <div className="text-2xl font-bold text-primary">Achievement Cape</div>
             <div className="text-sm text-muted-foreground mt-1">
-              {relevantSkills.reduce((sum, skill) => sum + skill.remaining, 0)} levels remaining
+              {mounted ? relevantSkills.reduce((sum, skill) => sum + skill.remaining, 0) : "..."} levels remaining
             </div>
           </Card>
         </div>

@@ -1,4 +1,5 @@
 "use client"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
@@ -6,8 +7,13 @@ import { useOSRSData } from "@/hooks/use-osrs-data"
 import { useCryptoData } from "@/hooks/use-crypto-data"
 
 export function HeroSection() {
+  const [mounted, setMounted] = useState(false)
   const { totalLevel, isLoading: osrsLoading } = useOSRSData()
   const { marketCap, holders, isLoading: cryptoLoading } = useCryptoData()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <section className="relative py-20 lg:py-32">
@@ -38,19 +44,19 @@ export function HeroSection() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             <Card className="p-6 text-center">
               <div className="text-2xl font-bold text-primary mb-2">
-                {osrsLoading ? "..." : totalLevel.toLocaleString()}
+                {!mounted || osrsLoading ? "..." : totalLevel.toLocaleString()}
               </div>
               <div className="text-sm text-muted-foreground">Total Level</div>
             </Card>
             <Card className="p-6 text-center">
               <div className="text-2xl font-bold text-primary mb-2">
-                {cryptoLoading ? "..." : `$${(marketCap / 1000).toFixed(1)}K`}
+                {!mounted || cryptoLoading ? "..." : `$${(marketCap / 1000).toFixed(1)}K`}
               </div>
               <div className="text-sm text-muted-foreground">Market Cap</div>
             </Card>
             <Card className="p-6 text-center">
               <div className="text-2xl font-bold text-primary mb-2">
-                {cryptoLoading ? "..." : holders.toLocaleString()}
+                {!mounted || cryptoLoading ? "..." : holders.toLocaleString()}
               </div>
               <div className="text-sm text-muted-foreground">Holders</div>
             </Card>
